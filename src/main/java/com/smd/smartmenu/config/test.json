@@ -1,0 +1,105 @@
+[
+  {
+    "id": 12,
+    "name": "Bruschetta",
+    "description": "Toasted bread with tomatoes, basil, and olive oil",
+    "image": "path/to/bruschetta.png",
+    "video": "path/to/bruschetta.mp4",
+    "price": 4.99,
+    "category": "Starters"
+  },
+  {
+    "id": 13,
+    "name": "Stuffed Mushrooms",
+    "description": "Mushrooms stuffed with cheese and herbs",
+    "image": "path/to/stuffed_mushrooms.png",
+    "video": "path/to/stuffed_mushrooms.mp4",
+    "price": 6.99,
+    "category": "Starters"
+  },
+  {
+    "id": 14,
+    "name": "Beef Burger",
+    "description": "Juicy beef burger with lettuce, cheese, and tomato",
+    "image": "path/to/beef_burger.png",
+    "video": "path/to/beef_burger.mp4",
+    "price": 9.99,
+    "category": "Main Course"
+  },
+  {
+    "id": 15,
+    "name": "Shrimp Alfredo Pasta",
+    "description": "Creamy pasta with shrimp and parmesan",
+    "image": "path/to/shrimp_alfredo.png",
+    "video": "path/to/shrimp_alfredo.mp4",
+    "price": 13.99,
+    "category": "Main Course"
+  },
+  {
+    "id": 16,
+    "name": "Cheesecake",
+    "description": "Classic cheesecake with a graham cracker crust",
+    "image": "path/to/cheesecake.png",
+    "video": "path/to/cheesecake.mp4",
+    "price": 5.49,
+    "category": "Desserts"
+  },
+  {
+    "id": 17,
+    "name": "Apple Pie",
+    "description": "Warm apple pie with cinnamon",
+    "image": "path/to/apple_pie.png",
+    "video": "path/to/apple_pie.mp4",
+    "price": 5.99,
+    "category": "Desserts"
+  },
+  {
+    "id": 18,
+    "name": "Lemonade",
+    "description": "Refreshing lemonade with fresh lemons",
+    "image": "path/to/lemonade.png",
+    "video": "path/to/lemonade.mp4",
+    "price": 2.99,
+    "category": "Drinks"
+  },
+  {
+    "id": 19,
+    "name": "French Fries",
+    "description": "Crispy french fries with a side of ketchup",
+    "image": "path/to/french_fries.png",
+    "video": "path/to/french_fries.mp4",
+    "price": 3.49,
+    "category": "Appetizers"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+  }
+]
