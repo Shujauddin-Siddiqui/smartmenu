@@ -1,33 +1,24 @@
 package com.smd.smartmenu.service;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.smd.smartmenu.model.Dish;
 import com.smd.smartmenu.model.Restaurant;
-import com.smd.smartmenu.repository.DishRepository;
 
-@Service
-public class DishService {
+public interface DishService {
 
-    @Autowired
-    private DishRepository dishRepository;
+    Dish saveDish(Dish dish);
 
-    public Dish addDish(Dish dish) {
-        return dishRepository.save(dish);
-    }
+    Optional<Dish> getDishById(Long id);
 
-    public List<Dish> getAllDishes() {
-        return dishRepository.findAll();
-    }
+    List<Dish> getAllDishes();
 
-    public List<Dish> getDishesByRestaurant(Restaurant restaurant) {
-        return dishRepository.findByRestaurant(restaurant);
-    }
+    List<Dish> getDishesByRestaurant(Restaurant restaurant);
 
-    public Dish getDishById(Long id) {
-        return dishRepository.findById(id).orElse(null);
-    }
+    Optional<Dish> updateDish(Dish dish);
+
+    void deleteDishById(Long id);
+
+    boolean isDishExistById(Long id);
 }

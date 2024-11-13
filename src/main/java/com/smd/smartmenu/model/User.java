@@ -12,10 +12,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 public class User {
 
     @Id
@@ -32,7 +34,16 @@ public class User {
 
     private Long mobile;
 
+    private String profilePhoto;
+
+    private boolean isEnabled;
+
+    private boolean isEmailVerified;
+
+    private boolean isPhoneVerified;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+    @Builder.Default
     private List<Restaurant> restaurants = new ArrayList<>();
 
 }

@@ -1,28 +1,23 @@
 package com.smd.smartmenu.service;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.smd.smartmenu.model.User;
-import com.smd.smartmenu.repository.UserRepository;
 
-@Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    User saveUser(User user);
 
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
+    Optional<User> getUserById(Long id);
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
-    }
-    
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+    Optional<User> updateUser(User user);
+
+    void deleteUserById(Long id);
+
+    boolean isUserExistsById(Long id);
+
+    boolean isUserExistsByEmail(String email);
+
+    List<User> getAllUsers();
 }
