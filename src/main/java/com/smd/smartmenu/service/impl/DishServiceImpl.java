@@ -3,8 +3,6 @@ package com.smd.smartmenu.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +18,8 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private DishRepository dishRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
+
 
     @Override
     public Dish saveDish(Dish dish) {
@@ -67,11 +66,11 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void deleteDishById(Long id) {
-        Dish dishFetched = dishRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Dish Not Found"));
-        dishRepository.delete(dishFetched);
-        logger.info("Dish deleted successfully: {}", id);
+    public void deleteDish(Dish dish) {
+        // Dish dishFetched = dishRepository.findById(id)
+        //         .orElseThrow(() -> new ResourceNotFoundException("Dish Not Found"));
+        dishRepository.delete(dish);
+        logger.info("Dish deleted successfully: {}", dish.getId());
     }
 
     @Override

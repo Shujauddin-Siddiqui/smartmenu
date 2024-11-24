@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.smd.smartmenu.model.Restaurant;
+import com.smd.smartmenu.model.SocialHandle;
 import com.smd.smartmenu.model.User;
 import com.smd.smartmenu.service.RestaurantService;
 import com.smd.smartmenu.service.UserService;
@@ -21,6 +22,8 @@ public class RestaurantController {
 
     @Autowired
     private UserService userService;
+
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/addRestaurant/{userId}")
     public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant restaurant, @PathVariable Long userId) {
@@ -68,21 +71,87 @@ public class RestaurantController {
 
     @PutMapping("/updateRestaurant/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable Long id, @RequestBody Restaurant restaurant) {
-        restaurant.setId(id); // Ensure the restaurant ID is set for updating
-        Optional<Restaurant> updatedRestaurant = restaurantService.updateRestaurant(restaurant);
+        // Check if the restaurant exists
+        Optional<Restaurant> existingRestaurantOptional = restaurantService.getRestaurantById(id);
 
-        return updatedRestaurant
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (existingRestaurantOptional.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Return 404 if restaurant doesn't exist
+        }
+
+        Restaurant existingRestaurant = existingRestaurantOptional.get();
+
+        // Update only non-relational fields
+        if (restaurant.getName() != null) {
+            existingRestaurant.setName(restaurant.getName());
+        }
+        if (restaurant.getLogo() != null) {
+            existingRestaurant.setLogo(restaurant.getLogo());
+        }
+        if (restaurant.getAddressLine() != null) {
+            existingRestaurant.setAddressLine(restaurant.getAddressLine());
+        }
+        if (restaurant.getCity() != null) {
+            existingRestaurant.setCity(restaurant.getCity());
+        }
+        if (restaurant.getState() != null) {
+            existingRestaurant.setState(restaurant.getState());
+        }
+        if (restaurant.getZipCode() != null) {
+            existingRestaurant.setZipCode(restaurant.getZipCode());
+        }
+        if (restaurant.getCountry() != null) {
+            existingRestaurant.setCountry(restaurant.getCountry());
+        }
+        if (restaurant.getContactNumber() != null) {
+            existingRestaurant.setContactNumber(restaurant.getContactNumber());
+        }
+        if (restaurant.getCuisineType() != null) {
+            existingRestaurant.setCuisineType(restaurant.getCuisineType());
+        }
+        if (restaurant.getRating() != 0) {
+            existingRestaurant.setRating(restaurant.getRating());
+        }
+        if (restaurant.getOpeningTime() != null) {
+            existingRestaurant.setOpeningTime(restaurant.getOpeningTime());
+        }
+        if (restaurant.getClosingTime() != null) {
+            existingRestaurant.setClosingTime(restaurant.getClosingTime());
+        }
+
+        // Save the updated restaurant
+        Restaurant updatedRestaurant = restaurantService.saveRestaurant(existingRestaurant);
+
+        return ResponseEntity.ok(updatedRestaurant);
     }
 
     @DeleteMapping("/deleteRestaurant/{id}")
     public ResponseEntity<Void> deleteRestaurantById(@PathVariable Long id) {
-        if (!restaurantService.isRestaurantExistById(id)) {
+        logger.info("Delete endpoint invoked for restaurant ID: {}", id);
+        Optional<Restaurant> restaurantOptional = restaurantService.getRestaurantById(id);
+
+        if (restaurantOptional.isEmpty()) {
+            logger.warn("Restaurant with ID: {} not found for deletion", id);
             return ResponseEntity.notFound().build();
         }
 
-        restaurantService.deleteRestaurantById(id);
+        Restaurant restaurantToBeDeleted = restaurantOptional.get();
+        User user = restaurantToBeDeleted.getUser();
+
+        // Safely remove the restaurant from the user's list
+        if (user != null) {
+            user.getRestaurants().removeIf(r -> r.getId().equals(restaurantToBeDeleted.getId()));
+            userService.saveUser(user); // Save user to update the association
+        }
+
+        // Save user to reflect changes (if necessary)
+        userService.saveUser(user);
+
+        // Delete restaurant and dependent entities (handled by CascadeType.REMOVE)
+        restaurantService.deleteRestaurant(restaurantToBeDeleted);
+
+        // Log deletion
+        logger.info("Restaurant with ID: {} deleted successfully", id);
+
         return ResponseEntity.noContent().build();
     }
 
@@ -98,4 +167,29 @@ public class RestaurantController {
         Restaurant updatedRestaurant = restaurantService.saveRestaurant(restaurant);
         return ResponseEntity.ok(updatedRestaurant);
     }
+
+    @PostMapping("/{restaurantId}/addSocialHandles")
+    public ResponseEntity<Restaurant> addSocialHandlesToRestaurant(
+            @PathVariable Long restaurantId,
+            @RequestBody List<SocialHandle> socialHandles) {
+
+        // Fetch the restaurant from database
+        Optional<Restaurant> restaurantOptional = restaurantService.getRestaurantById(restaurantId);
+
+        if (restaurantOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Restaurant restaurant = restaurantOptional.get();
+
+        // Add social handles to the restaurant
+        socialHandles.forEach(handle -> handle.setRestaurant(restaurant));
+        restaurant.getSocialHandles().addAll(socialHandles);
+
+        // Save the updated restaurant
+        Restaurant updatedRestaurant = restaurantService.saveRestaurant(restaurant);
+
+        return ResponseEntity.ok(updatedRestaurant);
+    }
+
 }

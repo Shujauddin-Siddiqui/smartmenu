@@ -1,105 +1,127 @@
 [
   {
-    "id": 12,
-    "name": "Bruschetta",
-    "description": "Toasted bread with tomatoes, basil, and olive oil",
-    "image": "path/to/bruschetta.png",
-    "video": "path/to/bruschetta.mp4",
-    "price": 4.99,
-    "category": "Starters"
+    "userId": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "securepassword",
+    "mobile": "1234567890",
+    "profilePhoto": "/images/profile/john_doe.jpg",
+    "restaurants": [
+      {
+        "id": 1,
+        "name": "Bella's Bistro",
+        "logo": "/images/restaurants/bellas_bistro_logo.png",
+        "addressLine": "123 Culinary Ave",
+        "city": "Los Angeles",
+        "state": "California",
+        "zipCode": "90001",
+        "country": "USA",
+        "contactNumber": "+1 323-555-1234",
+        "cuisineType": "Italian",
+        "rating": 4.5,
+        "openingTime": "10:00 AM",
+        "closingTime": "10:00 PM",
+        "dishes": [
+          {
+            "id": 1,
+            "name": "Paneer Butter Masala",
+            "description": "Creamy tomato-based curry with tender paneer cubes.",
+            "image": "paneer_butter_masala.jpg",
+            "video": "paneer_butter_masala.mp4",
+            "price": 250.0,
+            "category": "Main Course",
+            "availabilityStatus": true,
+            "preparationTime": 25,
+            "spiceLevel": "MEDIUM"
+          },
+          {
+            "id": 2,
+            "name": "Chicken Biryani",
+            "description": "Aromatic basmati rice cooked with marinated chicken and spices.",
+            "image": "chicken_biryani.jpg",
+            "video": "chicken_biryani.mp4",
+            "price": 300.0,
+            "category": "Main Course",
+            "availabilityStatus": true,
+            "preparationTime": 40,
+            "spiceLevel": "SPICY"
+          },
+          {
+            "id": 3,
+            "name": "Chocolate Lava Cake",
+            "description": "Warm chocolate cake with a gooey molten center.",
+            "image": "chocolate_lava_cake.jpg",
+            "video": "chocolate_lava_cake.mp4",
+            "price": 150.0,
+            "category": "Dessert",
+            "availabilityStatus": true,
+            "preparationTime": 15,
+            "spiceLevel": "MILD"
+          }
+        ],
+        "socialHandles": [
+          {
+            "id": 5,
+            "platform": "Facebook",
+            "link": "https://facebook.com/restaurant1"
+          },
+          {
+            "id": 6,
+            "platform": "Instagram",
+            "link": "https://instagram.com/restaurant1"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Green Leaf Café",
+        "logo": "/images/restaurants/green_leaf_cafe_logo.png",
+        "addressLine": "789 Nature Blvd",
+        "city": "San Francisco",
+        "state": "California",
+        "zipCode": "94105",
+        "country": "USA",
+        "contactNumber": "+1 415-555-7890",
+        "cuisineType": "Vegan",
+        "rating": 4.8,
+        "openingTime": "9:00 AM",
+        "closingTime": "8:00 PM",
+        "dishes": [],
+        "socialHandles": []
+      }
+    ],
+    "enabled": true,
+    "phoneVerified": false,
+    "emailVerified": true
   },
   {
-    "id": 13,
-    "name": "Stuffed Mushrooms",
-    "description": "Mushrooms stuffed with cheese and herbs",
-    "image": "path/to/stuffed_mushrooms.png",
-    "video": "path/to/stuffed_mushrooms.mp4",
-    "price": 6.99,
-    "category": "Starters"
-  },
-  {
-    "id": 14,
-    "name": "Beef Burger",
-    "description": "Juicy beef burger with lettuce, cheese, and tomato",
-    "image": "path/to/beef_burger.png",
-    "video": "path/to/beef_burger.mp4",
-    "price": 9.99,
-    "category": "Main Course"
-  },
-  {
-    "id": 15,
-    "name": "Shrimp Alfredo Pasta",
-    "description": "Creamy pasta with shrimp and parmesan",
-    "image": "path/to/shrimp_alfredo.png",
-    "video": "path/to/shrimp_alfredo.mp4",
-    "price": 13.99,
-    "category": "Main Course"
-  },
-  {
-    "id": 16,
-    "name": "Cheesecake",
-    "description": "Classic cheesecake with a graham cracker crust",
-    "image": "path/to/cheesecake.png",
-    "video": "path/to/cheesecake.mp4",
-    "price": 5.49,
-    "category": "Desserts"
-  },
-  {
-    "id": 17,
-    "name": "Apple Pie",
-    "description": "Warm apple pie with cinnamon",
-    "image": "path/to/apple_pie.png",
-    "video": "path/to/apple_pie.mp4",
-    "price": 5.99,
-    "category": "Desserts"
-  },
-  {
-    "id": 18,
-    "name": "Lemonade",
-    "description": "Refreshing lemonade with fresh lemons",
-    "image": "path/to/lemonade.png",
-    "video": "path/to/lemonade.mp4",
-    "price": 2.99,
-    "category": "Drinks"
-  },
-  {
-    "id": 19,
-    "name": "French Fries",
-    "description": "Crispy french fries with a side of ketchup",
-    "image": "path/to/french_fries.png",
-    "video": "path/to/french_fries.mp4",
-    "price": 3.49,
-    "category": "Appetizers"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
+    "userId": 2,
+    "name": "Alice Smith",
+    "email": "alice.smith@example.com",
+    "password": "anothersecurepassword",
+    "mobile": "919876543210",
+    "profilePhoto": "/images/profile/alice_smith.jpg",
+    "restaurants": [
+      {
+        "id": 2,
+        "name": "Taco Haven",
+        "logo": "/images/restaurants/taco_haven_logo.png",
+        "addressLine": "456 Fiesta Street",
+        "city": "Austin",
+        "state": "Texas",
+        "zipCode": "73301",
+        "country": "USA",
+        "contactNumber": "+1 512-555-5678",
+        "cuisineType": "Mexican",
+        "rating": 4.7,
+        "openingTime": "11:00 AM",
+        "closingTime": "9:00 PM",
+        "dishes": [],
+        "socialHandles": []
+      }
+    ],
+    "enabled": true,
+    "phoneVerified": true,
+    "emailVerified": false
   }
 ]

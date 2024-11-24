@@ -18,7 +18,7 @@ public interface DishService {
 
     Optional<Dish> updateDish(Dish dish);
 
-    void deleteDishById(Long id);
+    void deleteDish(Dish dish);
 
     boolean isDishExistById(Long id);
 }

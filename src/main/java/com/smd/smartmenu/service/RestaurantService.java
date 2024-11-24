@@ -20,5 +20,7 @@ public interface RestaurantService {
 
     void deleteRestaurantById(Long id);
 
+    void deleteRestaurant(Restaurant restaurant);
+
     boolean isRestaurantExistById(Long id);
 }

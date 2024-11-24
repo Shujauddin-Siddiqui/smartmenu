@@ -3,8 +3,6 @@ package com.smd.smartmenu.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User saveUser(User user) {

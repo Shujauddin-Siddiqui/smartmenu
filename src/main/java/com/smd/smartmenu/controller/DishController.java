@@ -1,6 +1,7 @@
 package com.smd.smartmenu.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,9 @@ public class DishController {
     private DishService dishService;
 
     @Autowired
-    private RestaurantService restaurantService; // Inject RestaurantService to fetch the restaurant
+    private RestaurantService restaurantService;
+
+    private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/addDish/restaurant/{restaurantId}")
     public ResponseEntity<Dish> addDish(@RequestBody Dish dish, @PathVariable Long restaurantId) {
@@ -72,26 +75,66 @@ public class DishController {
         Dish existingDish = dishService.getDishById(dishId)
                 .orElseThrow(() -> new ResourceNotFoundException("Dish Not Found"));
 
-        // Update fields
-        existingDish.setName(updatedDish.getName());
-        existingDish.setDescription(updatedDish.getDescription());
-        existingDish.setImage(updatedDish.getImage());
-        existingDish.setVideo(updatedDish.getVideo());
-        existingDish.setPrice(updatedDish.getPrice());
-        existingDish.setCategory(updatedDish.getCategory());
-        existingDish.setAvailabilityStatus(updatedDish.isAvailabilityStatus());
-        existingDish.setPreparationTime(updatedDish.getPreparationTime());
-        existingDish.setSpiceLevel(updatedDish.getSpiceLevel());
+        // Update fields only if they are not null or differ from the existing values
+        if (updatedDish.getName() != null) {
+            existingDish.setName(updatedDish.getName());
+        }
+        if (updatedDish.getDescription() != null) {
+            existingDish.setDescription(updatedDish.getDescription());
+        }
+        if (updatedDish.getImage() != null) {
+            existingDish.setImage(updatedDish.getImage());
+        }
+        if (updatedDish.getVideo() != null) {
+            existingDish.setVideo(updatedDish.getVideo());
+        }
+        if (updatedDish.getPrice() != 0) {
+            existingDish.setPrice(updatedDish.getPrice());
+        }
+        if (updatedDish.getCategory() != null) {
+            existingDish.setCategory(updatedDish.getCategory());
+        }
+        if (updatedDish.isAvailabilityStatus() != existingDish.isAvailabilityStatus()) {
+            existingDish.setAvailabilityStatus(updatedDish.isAvailabilityStatus());
+        }
+        if (updatedDish.getPreparationTime() > 0) {
+            existingDish.setPreparationTime(updatedDish.getPreparationTime());
+        }
+        if (updatedDish.getSpiceLevel() != null) {
+            existingDish.setSpiceLevel(updatedDish.getSpiceLevel());
+        }
 
-        // Save updated dish
+        // Save the updated dish
         Dish savedDish = dishService.saveDish(existingDish);
 
         return ResponseEntity.ok(savedDish);
     }
 
-    @DeleteMapping("/deleteDish/{dishId}")
-    public ResponseEntity<Void> deleteDish(@PathVariable Long dishId) {
-        dishService.deleteDishById(dishId);
+    @DeleteMapping("/deleteDish/{id}")
+    public ResponseEntity<Void> deleteDishById(@PathVariable Long id) {
+        logger.info("Delete endpoint invoked for dish ID: {}", id);
+        Optional<Dish> dishOptional = dishService.getDishById(id);
+
+        if (dishOptional.isEmpty()) {
+            logger.warn("Dish with ID: {} not found for deletion", id);
+            return ResponseEntity.notFound().build();
+        }
+
+        Dish dishToBeDeleted = dishOptional.get();
+        Restaurant restaurant = dishToBeDeleted.getRestaurant();
+
+        // Safely remove the dish from the restaurant's list
+        if (restaurant != null) {
+            restaurant.getDishes().removeIf(d -> d.getId().equals(dishToBeDeleted.getId()));
+            restaurantService.saveRestaurant(restaurant); // Save restaurant to update the association
+        }
+
+        // Delete dish
+        dishService.deleteDish(dishToBeDeleted);
+
+        // Log deletion
+        logger.info("Dish with ID: {} deleted successfully", id);
+
         return ResponseEntity.noContent().build();
     }
 

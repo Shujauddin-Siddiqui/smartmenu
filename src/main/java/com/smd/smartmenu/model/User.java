@@ -12,11 +12,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
 
@@ -32,7 +36,7 @@ public class User {
 
     private String password;
 
-    private Long mobile;
+    private String mobile;
 
     private String profilePhoto;
 
@@ -43,7 +47,22 @@ public class User {
     private boolean isPhoneVerified;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
-    @Builder.Default
     private List<Restaurant> restaurants = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        // Exclude restaurants to avoid cyclic reference
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", profilePhoto='" + profilePhoto + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", isEmailVerified=" + isEmailVerified +
+                ", isPhoneVerified=" + isPhoneVerified +
+                '}';
+    }
 
 }
