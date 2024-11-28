@@ -1,38 +1,26 @@
 package com.smd.smartmenu.service;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.smd.smartmenu.model.Restaurant;
-import com.smd.smartmenu.repository.RestaurantRepository;
+import com.smd.smartmenu.model.User;
 
-@Service
-public class RestaurantService {
+public interface RestaurantService {
 
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    Restaurant saveRestaurant(Restaurant restaurant);
 
-    public Restaurant addRestaurant(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
-    }
+    Optional<Restaurant> getRestaurantById(Long id);
 
-    public List<Restaurant> getAllRestaurants() {
-        return restaurantRepository.findAll();
-    }
+    List<Restaurant> getAllRestaurant();
 
-    public Restaurant getRestaurantById(Long id) {
-        return restaurantRepository.findById(id).orElse(null);
-    }
+    List<Restaurant> getAllRestaurantOfUser(User user);
 
-    public Restaurant updateRestaurant(Long id, Restaurant updatedRestaurant) {
-        return restaurantRepository.findById(id).map(existingRestaurant -> {
-            existingRestaurant.setName(updatedRestaurant.getName());
-            existingRestaurant.setLogo(updatedRestaurant.getLogo());
-            existingRestaurant.setSocialHandles(updatedRestaurant.getSocialHandles());
-            return restaurantRepository.save(existingRestaurant);
-            
-        }).orElse(null); // Return null if restaurant ID not found
-    }
+    Optional<Restaurant> updateRestaurant(Restaurant restaurant);
+
+    void deleteRestaurantById(Long id);
+
+    void deleteRestaurant(Restaurant restaurant);
+
+    boolean isRestaurantExistById(Long id);
 }
