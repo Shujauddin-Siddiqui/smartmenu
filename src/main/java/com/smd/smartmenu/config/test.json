@@ -1,7 +1,7 @@
 [
   {
     "userId": 1,
-    "name": "John Doe",
+    "name": "Nikhil Doe",
     "email": "john.doe@example.com",
     "password": "securepassword",
     "mobile": "1234567890",
@@ -105,7 +105,7 @@
       {
         "id": 2,
         "name": "Taco Haven",
-        "logo": "/images/restaurants/taco_haven_logo.png",
+        "logo": "/images/tacos/taco_haven_logo.png",
         "addressLine": "456 Fiesta Street",
         "city": "Austin",
         "state": "Texas",

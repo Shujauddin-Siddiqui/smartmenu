@@ -50,5 +50,4 @@ public class Dish {
                 ", spiceLevel='" + spiceLevel + '\'' +
                 '}';
     }
-
 }
