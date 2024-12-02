@@ -166,4 +166,23 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PostMapping("/authenticate")
+    public ResponseEntity<String> authenticateUser(@RequestBody User loginRequest) {
+        // Check if the user exists by email
+        Optional<User> userOptional = userService.getUserByEmail(loginRequest.getEmail());
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(401).body("Invalid email or password");
+        }
+
+        User user = userOptional.get();
+
+        // Compare the provided password with the stored password
+        if (!user.getPassword().equals(loginRequest.getPassword())) {
+            return ResponseEntity.status(401).body("Invalid email or password");
+        }
+
+        // If credentials match, return success
+        return ResponseEntity.ok("Login successful");
+    }
+
 }

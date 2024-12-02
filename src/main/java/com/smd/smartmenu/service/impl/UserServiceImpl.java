@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public Optional<User> updateUser(User user) {
         User userFetched = userRepository.findById(user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
