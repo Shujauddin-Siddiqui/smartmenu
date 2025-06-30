@@ -56,6 +56,17 @@ public class UserController {
         return userService.getUserById(id).orElse(null);
     }
 
+    @PostMapping("/getUserByEmail")
+    public ResponseEntity<User> getUserByEmail(@RequestBody String email) {
+        Optional<User> userOptional = userService.getUserByEmail(email);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Return 404 if user doesn't exist
+        }
+        
+        return ResponseEntity.ok(userOptional.get()); // Return the user if found
+    }
+
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         // Fetch the user from the database
